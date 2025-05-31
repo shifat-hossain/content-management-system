@@ -1,0 +1,30 @@
+<?php
+
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\PostController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/login', function () {
+    return view('login');
+})->middleware('guest')->name('login');
+
+Route::get('/register', function () {
+    return view('register');
+})->middleware('guest')->name('register');
+
+
+Route::name('user.')->prefix('user')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('posts', PostController::class);
+    Route::post('/posts/change-status', [PostController::class, 'change_status'])->name('posts.change_status');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/posts/image-upload', [ImageController::class, 'upload'])->name('posts.image_upload');
+    Route::post('/posts/unlink-image', [ImageController::class, 'unlink_image'])->name('posts.unlink_image');
+});
