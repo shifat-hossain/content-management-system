@@ -1,18 +1,18 @@
 @extends('panel.master')
 
-@section('title', 'Post List')
+@section('title', 'Delete Post List')
 @section('content')
 
-    <h1 class="mt-4">posts</h1>
+    <h1 class="mt-4">Delete Posts</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">post List</li>
+        <li class="breadcrumb-item active">Delete Post List</li>
     </ol>
 
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            post List
+            Delete Post List
             <a href="{{ route('user.posts.create') }}" class="btn btn-primary float-end">
                 Create post
             </a>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($posts as $post)
+                    @foreach ($deleted_posts as $post)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $post->title }}</td>
@@ -43,21 +43,15 @@
                                 </label>
                             </td>
                             <td class="text-end">
-                                <a href="{{ route('user.posts.edit', $post->slug) }}" class="btn btn-primary">
-                                    Edit
+                                <a href="{{ route('user.posts.restore', $post->slug) }}" class="btn btn-primary">
+                                    Restore
                                 </a>
-                                <form action="{{ route('user.posts.destroy', $post->slug) }}" method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{ $posts->links() }}
+            {{ $deleted_posts->links() }}
         </div>
     </div>
 @endsection

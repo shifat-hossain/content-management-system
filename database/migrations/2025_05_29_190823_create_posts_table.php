@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('approved_status', '100')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -32,6 +33,7 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->dropIndex(['user_id']); // Drops index 'geo_state_index'
+            $table->dropSoftDeletes();
         });
         
         Schema::dropIfExists('posts');

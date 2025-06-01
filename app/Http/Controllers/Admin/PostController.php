@@ -99,8 +99,21 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('success', 'Post approval status updated successfully.');
+    }
+
+    public function deleted_posts(Request $request) {
+        $deleted_posts = Post::onlyTrashed()->where('user_id', auth()->user()->id)->paginate(10);
+        return view('panel.admin.posts.deleted_posts', compact('deleted_posts'));
+    }
+
+    public function restore($slug) {
+        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post->restore();
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post restore successfully.');
     }
 }

@@ -22,6 +22,8 @@ Route::name('user.')->prefix('user')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('posts', PostController::class);
     Route::post('/posts/change-status', [PostController::class, 'change_status'])->name('posts.change_status');
+    Route::get('/posts/delete-posts/list', [PostController::class, 'deleted_posts'])->name('posts.delete_posts');
+    Route::get('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
 });
 
 Route::middleware('auth')->group(function () {

@@ -42,6 +42,9 @@
             <a class="nav-link" href="{{ route(auth()->user()->role.'.posts.index') }}">
                 All Post
             </a>
+            <a class="nav-link" href="{{ route(auth()->user()->role.'.posts.delete_posts') }}">
+                Deleted Post
+            </a>
         </nav>
     </div>
 </div>

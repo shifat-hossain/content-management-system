@@ -52,7 +52,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -60,6 +60,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        ($post->user_id != auth()->user()->id) ?? abort(403, 'Access denied');
+        
         $categories = Category::whereNull('parent_id')->with('child_categories')->get();
         return view('panel.user.posts.edit', compact('categories', 'post'));
     }
@@ -94,8 +96,21 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('user.posts.index')->with('success', 'Post approval status updated successfully.');
+    }
+
+    public function deleted_posts(Request $request) {
+        $deleted_posts = Post::onlyTrashed()->where('user_id', auth()->user()->id)->paginate(10);
+        return view('panel.user.posts.deleted_posts', compact('deleted_posts'));
+    }
+
+    public function restore($slug) {
+        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post->restore();
+
+        return redirect()->route('user.posts.index')->with('success', 'Post restore successfully.');
     }
 }
