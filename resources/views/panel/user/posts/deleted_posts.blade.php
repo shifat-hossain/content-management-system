@@ -46,6 +46,12 @@
                                 <a href="{{ route('user.posts.restore', $post->slug) }}" class="btn btn-primary">
                                     Restore
                                 </a>
+                                <form action="{{ route('user.posts.permenant_delete', $post->slug) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Permenant Delete</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

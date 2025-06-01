@@ -24,6 +24,7 @@ Route::name('user.')->prefix('user')->middleware('auth')->group(function () {
     Route::post('/posts/change-status', [PostController::class, 'change_status'])->name('posts.change_status');
     Route::get('/posts/delete-posts/list', [PostController::class, 'deleted_posts'])->name('posts.delete_posts');
     Route::get('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::delete('/posts/{post}/permenant-delete', [PostController::class, 'permenant_delete'])->name('posts.permenant_delete');
 });
 
 Route::middleware('auth')->group(function () {

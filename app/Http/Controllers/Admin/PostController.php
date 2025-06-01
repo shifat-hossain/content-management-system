@@ -113,7 +113,13 @@ class PostController extends Controller
     public function restore($slug) {
         $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
         $post->restore();
-
         return redirect()->route('admin.posts.index')->with('success', 'Post restore successfully.');
+    }
+
+    public function permenant_delete($slug)
+    {
+        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post->forceDelete();
+        return redirect()->route('user.posts.index')->with('success', 'Post permenantly deleted successfully.');
     }
 }

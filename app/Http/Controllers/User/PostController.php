@@ -61,7 +61,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         ($post->user_id != auth()->user()->id) ?? abort(403, 'Access denied');
-        
+
         $categories = Category::whereNull('parent_id')->with('child_categories')->get();
         return view('panel.user.posts.edit', compact('categories', 'post'));
     }
@@ -112,5 +112,12 @@ class PostController extends Controller
         $post->restore();
 
         return redirect()->route('user.posts.index')->with('success', 'Post restore successfully.');
+    }
+
+    public function permenant_delete($slug)
+    {
+        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post->forceDelete();
+        return redirect()->route('user.posts.index')->with('success', 'Post permenantly deleted successfully.');
     }
 }
