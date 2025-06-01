@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Admin\Category;
 
-use App\Http\Requests\Admin\Category\Concerns\CategoryRequest;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Category\Concerns\CategoryRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends CategoryRequest

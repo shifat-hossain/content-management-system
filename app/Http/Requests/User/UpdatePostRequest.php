@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Post;
+namespace App\Http\Requests\Post\User;
 
 use App\Http\Requests\Post\Concerns\PostRequest;
 

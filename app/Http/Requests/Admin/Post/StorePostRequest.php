@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Admin\Post;
 
-use App\Http\Requests\Admin\Post\Concerns\PostRequest;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Post\Concerns\PostRequest;
 
 class StorePostRequest extends PostRequest
 {
