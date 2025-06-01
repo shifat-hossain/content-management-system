@@ -40,6 +40,7 @@ class PostController extends Controller
             'title',
             'slug',
             'description',
+            'user_id'
         ]));
         $post->categories()->attach($request->category_ids);
         (new PostTagService())->store($post, $request->tags);
@@ -118,7 +119,9 @@ class PostController extends Controller
 
     public function permenant_delete($slug)
     {
-        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post = auth()->user->post->withTrashed()->where('slug', $slug)->firstOrFail();
+        $post->tags->delete();
+        $post->categories->delete();
         $post->forceDelete();
         return redirect()->route('user.posts.index')->with('success', 'Post permenantly deleted successfully.');
     }

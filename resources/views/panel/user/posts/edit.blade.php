@@ -53,7 +53,7 @@
                     </div>
                     <x-forms.field class="col-12">
                         <x-forms.label name="description" class="form-label" />
-                        <x-forms.textarea name='description' id="summernote" value="{{ $post->description }}" />
+                        <x-forms.textarea name='description' id="summernote" value="{!! $post->description !!}" />
                     </x-forms.field>
                 </div>
 

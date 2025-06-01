@@ -41,6 +41,7 @@ class PostController extends Controller
             'title',
             'slug',
             'description',
+            'user_id'
         ]));
         $post->categories()->attach($request->category_ids);
         (new PostTagService())->store($post, $request->tags);

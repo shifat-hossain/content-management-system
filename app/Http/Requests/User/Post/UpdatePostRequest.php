@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\User\Post;
 
-use App\Http\Requests\Post\Concerns\PostRequest;
+use App\Http\Requests\Concerns\PostRequest;
 
-class StorePostRequest extends PostRequest
+class UpdatePostRequest extends PostRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,8 @@ class StorePostRequest extends PostRequest
     public function rules(): array
     {
         return array_merge(parent::rules(), [
-            'user_id' => 'required|exists:users,id',
-        ]);
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'slug' => str($this->title)->slug(),
-            'user_id' => auth()->user()->id,
+            'title' => 'unique:posts,title,' . $this->post->id,
+            'slug' => 'unique:posts,slug,' . $this->post->id,
         ]);
     }
 }
