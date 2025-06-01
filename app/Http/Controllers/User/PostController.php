@@ -72,6 +72,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        ($post->user_id != auth()->user()->id) ?? abort(403, 'Access denied');
+
         $post->update($request->safe()->only([
             'title',
             'slug',
@@ -99,6 +101,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        ($post->user_id != auth()->user()->id) ?? abort(403, 'Access denied');
+
         $post->delete();
         return redirect()->route('user.posts.index')->with('success', 'Post approval status updated successfully.');
     }
@@ -109,7 +113,7 @@ class PostController extends Controller
     }
 
     public function restore($slug) {
-        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post = auth()->user()->posts()->withTrashed()->where('slug', $slug)->firstOrFail();
         $post->restore();
 
         return redirect()->route('user.posts.index')->with('success', 'Post restore successfully.');
@@ -117,7 +121,7 @@ class PostController extends Controller
 
     public function permenant_delete($slug)
     {
-        $post = Post::withTrashed()->where('slug', $slug)->firstOrFail();
+        $post = auth()->user()->posts()->withTrashed()->where('slug', $slug)->firstOrFail();
         $post->forceDelete();
         return redirect()->route('user.posts.index')->with('success', 'Post permenantly deleted successfully.');
     }
