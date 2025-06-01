@@ -29,6 +29,7 @@ class PostRequest extends FormRequest
             'is_published' => 'nullable|boolean',
             'approved_status' => 'nullable|boolean',
             'approved_at' => 'nullable|boolean',
+            'tags' => 'nullable',
         ];
     }
 }

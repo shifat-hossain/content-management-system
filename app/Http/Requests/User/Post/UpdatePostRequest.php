@@ -26,4 +26,11 @@ class UpdatePostRequest extends PostRequest
             'slug' => 'unique:posts,slug,' . $this->post->id,
         ]);
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => str($this->title)->slug()
+        ]);
+    }
 }
