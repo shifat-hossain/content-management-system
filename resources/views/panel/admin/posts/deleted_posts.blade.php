@@ -5,7 +5,7 @@
 
     <h1 class="mt-4">Delete Posts</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route(auth()->user()->role.'.dashboard') }}">Dashboard</a></li>">Dashboard</a></li>
         <li class="breadcrumb-item active">Delete Post List</li>
     </ol>
 
